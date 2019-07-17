@@ -15,7 +15,6 @@
   import {
     formatNumber,
     formatString,
-    padString,
   } from './formatting'
   import { setCursor } from './utils'
 
@@ -89,7 +88,7 @@
     watch: {
       value: {
         immediate: true,
-        handler: function(value, oldValue) {
+        handler: function(value) {
           const parsedValue = parseNumber(value, this.$props)
           if(parsedValue !== null && parsedValue !== undefined) {
             this.formattedValue = formatNumber(parsedValue, this.$props)

@@ -1,5 +1,4 @@
 const EMPTY_STRING = ''
-const PERIOD_STRING = '.'
 const ZERO_STRING = '0'
 const NON_DIGITS_REGEX = /[^0-9]/g
 const THOUSANDS_LENGTH = 3

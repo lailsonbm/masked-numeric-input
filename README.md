@@ -1,24 +1,29 @@
 # masked-numeric-input
 
-> Numeric mask for text inputs
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build your demo page for production
-npm run build:example
-
-# pack your component/library with bili for publishing to npm
-npm run build
-
-# publishing your component/library to npm (Check your version first before publish.)
-npm publish
+## Project setup
+```
+yarn install
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### Compiles and hot-reloads for development
+```
+yarn run serve
+```
+
+### Compiles and minifies the library for production
+```
+yarn run build
+```
+
+### Run your tests
+```
+yarn run test
+```
+
+### Lints and fixes files
+```
+yarn run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import MaskedNumericInput from '../src'
+  import MaskedNumericInput from './components/MaskedNumericInput/index.vue'
 
   export default {
     name: 'app',
