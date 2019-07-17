@@ -26,6 +26,11 @@
     <button type="button" @click="setNumberTo('42a')">Set value to "42a"</button>
     <button type="button" @click="setNumberTo('42.01a')">Set value to "42.01a"</button>
     <br/>
+    <button type="button" @click="setNumberTo(-0)">Set value to -0</button>
+    <button type="button" @click="setNumberTo(-42)">Set value to -42</button>
+    <button type="button" @click="setNumberTo(-42.01)">Set value to -42.01</button>
+    <button type="button" @click="setNumberTo(-1234568.90)">Set value to -1234568.90</button>
+    <br/>
     <br/>
     {{number}}
   </div>
@@ -38,13 +43,15 @@
     name: 'app',
     data: function() {
       return {
-        number: 42000.01,
+        number: -42000.01,
         format: {
           precision: 2,
           thousands: '.',
           decimal: ',',
           prefix: 'US$ ',
           suffix: ' #',
+          negativePrefix: '[',
+          negativeSuffix: ']',
         }
       }
     },

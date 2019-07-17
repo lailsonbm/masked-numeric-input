@@ -3,5 +3,7 @@ export default {
   suffix: '',
   thousands: ',',
   decimal: '.',
-  precision: 0
+  precision: 0,
+  negativePrefix: '',
+  negativeSuffix: '',
 }

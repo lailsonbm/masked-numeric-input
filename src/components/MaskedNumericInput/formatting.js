@@ -4,7 +4,7 @@ const NON_DIGITS_REGEX = /[^0-9]/g
 const THOUSANDS_LENGTH = 3
 
 export const formatNumber = (number, opts) => {
-  const numberAsString = number.toFixed(opts.precision)
+  const numberAsString = Math.abs(number).toFixed(opts.precision)
   let integerString, decimalString, decimalSeparator
 
   if(opts.precision > 0) {
@@ -18,10 +18,16 @@ export const formatNumber = (number, opts) => {
   }
 
   const formattedIntegerString = formatIntegerString(integerString, opts.thousands)
-  return opts.prefix + formattedIntegerString + decimalSeparator + decimalString + opts.suffix
+
+  let formattedNumberWithSignal = formattedIntegerString + decimalSeparator + decimalString
+  if(number < 0) {
+    formattedNumberWithSignal = opts.negativePrefix + formattedNumberWithSignal + opts.negativeSuffix
+  }
+
+  return opts.prefix + formattedNumberWithSignal + opts.suffix
 }
 
-export const formatString = (string, opts) => {
+export const formatString = (string, opts, isNegative) => {
   if(string === null || string === undefined || string === EMPTY_STRING) {
     return string
   }
@@ -47,7 +53,12 @@ export const formatString = (string, opts) => {
   }
 
   const formattedIntegerString = formatIntegerString(integerString, opts.thousands)
-  return opts.prefix + formattedIntegerString + formattedString + opts.suffix
+  let formattedNumberWithSignal = formattedIntegerString + formattedString
+  if(isNegative) {
+    formattedNumberWithSignal = opts.negativePrefix + formattedNumberWithSignal + opts.negativeSuffix
+  }
+
+  return opts.prefix + formattedNumberWithSignal + opts.suffix
 }
 
 export const padString = (string, length) => {

@@ -18,6 +18,9 @@
   } from './formatting'
   import { setCursor } from './utils'
 
+  const PLUS_SIGN = '+'
+  const MINUS_SIGN = '-'
+
   export default {
     name: 'masked-numeric-input',
     props: {
@@ -44,6 +47,14 @@
       suffix: {
         type: String,
         default: () => defaults.suffix,
+      },
+      negativePrefix: {
+        type: String,
+        default: () => defaults.negativePrefix,
+      },
+      negativeSuffix: {
+        type: String,
+        default: () => defaults.negativeSuffix,
       }
     },
     model: {
@@ -64,16 +75,25 @@
     },
     methods: {
       handleInput: function(event) {
+        let isNegative = this.value < 0
+        if(this.value && event.data === PLUS_SIGN) {
+          isNegative = false
+        } else if(this.value && event.data === MINUS_SIGN) {
+          isNegative = true
+        }
+
         const target = event.target
         const value = target.value
-        const newFormattedValue = formatString(value, this.$props)
+        const newFormattedValue = formatString(value, this.$props, isNegative)
 
         const positionFromEnd = value.length - target.selectionEnd
         target.value = newFormattedValue
 
-        let newPositionFromEnd = Math.max(positionFromEnd, this.$props.suffix.length)
+        const totalPrefixLength = this.$props.prefix.length + this.$props.negativePrefix.length
+        const totalSuffixLength = this.$props.suffix.length + this.$props.negativeSuffix.length
+        let newPositionFromEnd = Math.max(positionFromEnd, totalSuffixLength)
         newPositionFromEnd = newFormattedValue.length - newPositionFromEnd
-        newPositionFromEnd = Math.max(newPositionFromEnd, this.$props.prefix.length + 1)
+        newPositionFromEnd = Math.max(newPositionFromEnd, totalPrefixLength + 1)
         setCursor(target, newPositionFromEnd)
 
         if(this.formattedValue !== newFormattedValue) {

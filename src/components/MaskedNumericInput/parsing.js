@@ -15,14 +15,29 @@ export const parseNumber = (value, opts) => {
 
 export const parseFormattedNumber = (string, opts) => {
   const coreString = string.substring(opts.prefix.length, string.length - opts.suffix.length)
-  const sanitizedString = replaceAll(coreString, opts.thousands, EMPTY_STRING)
+  const isNegative = (opts.negativePrefix || opts.negativeSuffix) && (
+    (opts.negativePrefix && coreString.startsWith(opts.negativePrefix)) ||
+    (opts.negativeSuffix && coreString.endsWith(opts.negativeSuffix))
+  )
+
+  let sanitizedString = coreString
+  if(isNegative) {
+    const sanitizedStringStart = opts.negativePrefix.length
+    const sanitizedStringEnd = coreString.length - opts.negativeSuffix.length
+    sanitizedString = coreString.substring(sanitizedStringStart, sanitizedStringEnd)
+  }
+  sanitizedString = replaceAll(sanitizedString, opts.thousands, EMPTY_STRING)
     .replace(opts.decimal, PERIOD_STRING)
 
   const parsedNumber = opts.precision > 0 ?
     parseFloat(sanitizedString) :
     parseInt(sanitizedString, 10)
 
-  return isNumeric(parsedNumber) ? parsedNumber : null
+  if(isNumeric(parsedNumber)) {
+    return isNegative ? -parsedNumber : parsedNumber
+  } else {
+    return null
+  }
 }
 
 const isNumeric = (value) => !isNaN(value)
